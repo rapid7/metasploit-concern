@@ -1,0 +1,22 @@
+# bundler
+.bundle/
+
+# Rubymine
+.idea
+
+# YARD
+.yardoc
+doc
+
+# simplecov
+coverage
+
+# @see http://yehudakatz.com/2010/12/16/clarifying-the-roles-of-the-gemspec-and-gemfile/
+Gemfile.lock
+
+log/*.log
+pkg/
+spec/dummy/.sass-cache
+spec/dummy/db/*.sqlite3
+spec/dummy/log/*.log
+spec/dummy/tmp/
