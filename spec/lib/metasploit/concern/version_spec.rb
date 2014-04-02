@@ -3,7 +3,11 @@ require 'spec_helper'
 require 'spec_helper'
 
 describe Metasploit::Concern::Version do
-  branch = `git rev-parse --abbrev-ref HEAD`.strip
+  branch = ENV['TRAVIS_BRANCH']
+
+  if branch.blank?
+    branch = `git rev-parse --abbrev-ref HEAD`.strip
+  end
 
   context 'CONSTANTS' do
     context 'MAJOR' do
