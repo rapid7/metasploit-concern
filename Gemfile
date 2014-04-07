@@ -28,6 +28,8 @@ end
 group :test do
   # Uploads simplecov reports to coveralls.io
   gem 'coveralls', require: false
+  # add matchers from shoulda, such as validates_presence_of, which are useful for testing validations
+  gem 'shoulda-matchers'
   # code coverage of tests
   gem 'simplecov', :require => false
 end

@@ -16,7 +16,12 @@ Gemfile.lock
 
 log/*.log
 pkg/
+
+# dummy application temporary files
 spec/dummy/.sass-cache
 spec/dummy/db/*.sqlite3
 spec/dummy/log/*.log
 spec/dummy/tmp/
+
+# spec temporary files
+spec/tmp
