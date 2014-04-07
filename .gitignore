@@ -15,7 +15,10 @@ coverage
 Gemfile.lock
 
 log/*.log
+
+# built gems
 pkg/
+*.gem
 
 # dummy application temporary files
 spec/dummy/.sass-cache
