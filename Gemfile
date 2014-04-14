@@ -29,7 +29,9 @@ group :test do
   # Uploads simplecov reports to coveralls.io
   gem 'coveralls', require: false
   # add matchers from shoulda, such as validates_presence_of, which are useful for testing validations
-  gem 'shoulda-matchers'
+  # Version 2.6.0 has a bug when ActiveRecord is not available
+  # @see https://github.com/thoughtbot/shoulda-matchers/issues/480
+  gem 'shoulda-matchers', '< 2.6.0'
   # code coverage of tests
   gem 'simplecov', :require => false
 end
