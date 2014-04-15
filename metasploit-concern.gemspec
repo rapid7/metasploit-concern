@@ -10,10 +10,11 @@ Gem::Specification.new do |s|
   s.authors     = ['Luke Imhoff']
   s.email       = ['luke_imhoff@rapid7.com']
   s.homepage    = 'https://github.com/rapid7/metasploit-concern'
+  s.license     = 'BSD-3-clause'
   s.summary     = ''
   s.description = ''
 
-  s.files = Dir['{app,config,db,lib}/**/*'] + ['MIT-LICENSE', 'Rakefile', 'README.md']
+  s.files = Dir['{app,config,db,lib}/**/*'] + ['LICENSE', 'Rakefile', 'README.md']
 
   # documentation
   s.add_development_dependency 'yard'
