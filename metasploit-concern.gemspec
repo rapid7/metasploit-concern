@@ -19,5 +19,6 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*'] + ['LICENSE', 'Rakefile', 'README.md']
 
   # uses ActiveSupport.on_load to include concerns
-  s.add_runtime_dependency 'activesupport'
+  # it is only defined in version 3.0.0 and newer
+  s.add_runtime_dependency 'activesupport', '~> 3.0', '>= 3.0.0'
 end
