@@ -18,21 +18,6 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{app,config,db,lib}/**/*'] + ['LICENSE', 'Rakefile', 'README.md']
 
-  # documentation
-  s.add_development_dependency 'yard'
-
   # uses ActiveSupport.on_load to include concerns
   s.add_runtime_dependency 'activesupport'
-
-  if RUBY_PLATFORM =~ /java/
-    # markdown formatting for yard
-    s.add_development_dependency 'kramdown'
-
-    s.platform = Gem::Platform::JAVA
-  else
-    # markdown formatting for yard
-    s.add_development_dependency 'redcarpet'
-
-    s.platform = Gem::Platform::RUBY
-  end
 end

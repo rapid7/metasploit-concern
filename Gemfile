@@ -5,6 +5,13 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
+group :development do
+  # documentation
+  gem 'yard'
+  gem 'redcarpet', platforms: :ruby
+  gem 'kramdown', platforms: :jruby
+end
+
 group :development, :test do
   # rails is not used because activerecord should not be included, but rails would normally coordinate the versions
   # between its dependencies, which is now handled by this constraint.
