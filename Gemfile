@@ -5,6 +5,13 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
+group :development do
+  # documentation
+  gem 'yard'
+  gem 'redcarpet', platforms: :ruby
+  gem 'kramdown', platforms: :jruby
+end
+
 group :development, :test do
   # rails is not used because activerecord should not be included, but rails would normally coordinate the versions
   # between its dependencies, which is now handled by this constraint.
@@ -28,6 +35,10 @@ end
 group :test do
   # Uploads simplecov reports to coveralls.io
   gem 'coveralls', require: false
+  # add matchers from shoulda, such as validates_presence_of, which are useful for testing validations
+  # Version 2.6.0 has a bug when ActiveRecord is not available
+  # @see https://github.com/thoughtbot/shoulda-matchers/issues/480
+  gem 'shoulda-matchers', '< 2.6.0'
   # code coverage of tests
   gem 'simplecov', :require => false
 end
