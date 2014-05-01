@@ -6,7 +6,7 @@ class Metasploit::Concern::Loader
   # Attributes
   #
 
-  # @!attributes [rw] root
+  # @!attribute [rw] root
   #   Pathname under which to find concerns.
   #
   #   @return [Pathname]
