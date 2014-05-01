@@ -13,3 +13,11 @@ else
 end
 
 require 'aruba/cucumber'
+# only does jruby customization if actually in JRuby
+require 'aruba/jruby'
+
+if RUBY_PLATFORM == 'java'
+  Before do
+    @aruba_timeout_seconds = 6
+  end
+end
