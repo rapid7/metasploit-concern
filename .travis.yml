@@ -1,5 +1,5 @@
 env:
-  - RAKE_TASK=cucumber
+  - RAKE_TASK=features
   - RAKE_TASK=spec
 language: ruby
 rvm:
