@@ -24,9 +24,47 @@ Or install it yourself as:
 
     $ gem install metasploit-concern
 
-## Usage
+## Supporting concerns
+
+`Metasploit::Concern` support is a cooperative effort that involves the classes from the gem being setup
+to allow downstream dependents to inject concerns.
+
+In order for `Metasploit::Concern` to load concerns for `app/concerns`, the class on which `Module#include` will be
+called must support `ActiveSupport` load hooks with a specific name format.  You can run the appropriate load hooks
+at the bottom of the class body:
+
+    class GemNamespace::GemClass < ActiveRecord::Base
+      # class body
+
+      Metasploit::Concern.run(self)
+    end
+
+### Testing
+
+Include the shared examples from `Metasploit::Concern' in your `spec_helper.rb`:
+
+
+    Dir[Metasploit::Concern.root.join("spec/support/**/*.rb")].each do |f|
+      require f
+    end
+
+
+To verify that your classes call `Metasploit::Concern.run` correctly, you can use the `'Metasploit::Concern.run'` shared
+example:
+
+    # spec/app/models/gem_namespace/gem_class_spec.rb
+    describe GemNamespace::GemClass do
+      it_should_behave_like 'Metasploit::Concern.run'
+    end
+
+## Using concerns
+
+Concerns are added in downstream dependents of gems that support concerns.  These dependents can be a `Rails::Engines`
+or full `Rails::Application`.
 
 ### app/concerns
+
+#### Rails::Application
 
 Add this line to your application's `config/application.rb`:
 
@@ -35,6 +73,16 @@ Add this line to your application's `config/application.rb`:
 Or if you're already using `config.autoload_paths +=`:
 
     config.autoload_paths += config.root.join('app', 'concerns')
+
+#### Rails::Engine
+
+Add this line to your engine's class body:
+
+    module EngineNamespace
+      class Engine < ::Rails::Engine
+        config.paths.add 'app/concerns', autoload: true
+      end
+    end
 
 ### Concerns
 
