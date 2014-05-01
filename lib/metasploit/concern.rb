@@ -1,7 +1,22 @@
+#
+# Gems
+#
+
+# `String#underscore``
+require 'active_support/core_ext/string/inflections'
+# `ActiveSupport.run_load_hooks`
+require 'active_support/lazy_load_hooks'
+
+#
+# Project
+#
+
 # Only include the Rails engine when using Rails.  This is for compatibility with metasploit-framework.
 if defined? Rails
   require 'metasploit/concern/engine'
 end
+
+require 'metasploit/concern/version'
 
 # Shared namespace for metasploit gems; used in {https://github.com/rapid7/metasploit-concern metasploit-concern},
 # {https://github.com/rapid7/metasploit-framework metasploit-framework}, and
@@ -10,13 +25,12 @@ module Metasploit
   # Automates the inclusion of concerns into classes and models from other `Rail::Engine`s by use of an app/concerns
   # directory in the `Rails::Engine` that declares the concerns.
   #
-  # The `Class` or `Module` must support the use of concerns by calling ActiveSupport.run_load_hooks with a symbol equal
-  # to the underscore of its name with any '/' replaced with underscores also.
+  # The `Class` or `Module` must support the use of concerns by calling {run}.
   #
   # @example engine_that_supports_concerns/app/models/model_that_supports_concerns.rb
   #   class EngineThatSupportsConcerns::ModelThatSupportsConcerns
   #     # declared as last statement in body so that concerns can redefine everything in class
-  #     ActiveSupport.run_load_hooks(:engine_that_supports_concerns_model_that_supports_concerns, self)
+  #     Metasploit::Concern.run(self)
   #   end
   #
   # To include concerns from a Rails::Application add 'app/concerns' to paths and then declare concerns under
@@ -68,6 +82,29 @@ module Metasploit
   #     end
   #   end
   module Concern
+    # @note If `Rails` is loaded and {Metasploit::Concern::Engine} is defined, just use
+    #   `Metasploit::Concern::Engine.root`.
+    #
+    # The root of the `metasploit-concern` gem's file tree.
+    #
+    # @return [Pathname]
+    def self.root
+      @root ||= Pathname.new(__FILE__).parent.parent.parent
+    end
 
+    # @note As `ActiveSupport.run_load_hooks` is used, it is safe to call {run} prior to {Metasploit::Concern}'s
+    # initializer {Metasploit::Concern::Loader#register registering} all the load hooks as any late load hooks will run
+    # as they are registered.
+    #
+    # @note `klass` must have a `Module#name` so that the load hook symbol can be derived.
+    #
+    # Runs the load hooks setup to include app/concerns concerns this `klass`.
+    #
+    # @param klass [Class] A class that should support loading concerns from app/concerns.
+    # @return [void]
+    def self.run(klass)
+      load_hook_name = klass.name.underscore.gsub('/', '_').to_sym
+      ActiveSupport.run_load_hooks(load_hook_name, klass)
+    end
   end
 end

@@ -33,8 +33,12 @@ group :development, :test do
 end
 
 group :test do
+  # Test the 'Metasploit::Concern.run' shared example
+  gem 'aruba'
   # Uploads simplecov reports to coveralls.io
   gem 'coveralls', require: false
+  # Test the 'Metasploit::Concern.run' shared example
+  gem 'cucumber'
   # add matchers from shoulda, such as validates_presence_of, which are useful for testing validations
   # Version 2.6.0 has a bug when ActiveRecord is not available
   # @see https://github.com/thoughtbot/shoulda-matchers/issues/480

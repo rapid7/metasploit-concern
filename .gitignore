@@ -32,3 +32,6 @@ spec/dummy/tmp/
 
 # spec temporary files
 spec/tmp
+
+# aruba temporary files
+/tmp
