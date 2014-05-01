@@ -1,2 +1,2 @@
 --markup markdown
-{lib}/**/*.rb
+{app,lib}/**/*.rb
