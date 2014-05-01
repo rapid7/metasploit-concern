@@ -30,6 +30,13 @@ Dir.glob(rakefile_glob) do |rakefile|
   load rakefile
 end
 
+require 'cucumber'
+require 'cucumber/rake/task'
+
+Cucumber::Rake::Task.new(:features) do |t|
+  t.cucumber_opts = 'features --format pretty'
+end
+
 begin
   require 'rspec/core'
 rescue LoadError
