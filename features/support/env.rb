@@ -16,7 +16,7 @@ require 'aruba/cucumber'
 # only does jruby customization if actually in JRuby
 require 'aruba/jruby'
 
-if RUBY_PLATFORM == 'java'
+if ['jruby', 'rbx'].include? RUBY_ENGINE
   Before do
     @aruba_timeout_seconds = 6
   end
