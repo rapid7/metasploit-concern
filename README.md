@@ -41,7 +41,7 @@ at the bottom of the class body:
 
 ### Testing
 
-Include the shared examples from `Metasploit::Concern' in your `spec_helper.rb`:
+Include the shared examples from `Metasploit::Concern` in your `spec_helper.rb`:
 
 
     Dir[Metasploit::Concern.root.join("spec/support/**/*.rb")].each do |f|
