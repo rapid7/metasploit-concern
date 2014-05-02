@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
                   '<module_with_concerns> to ease monkey-patching associations and validations on ActiveRecord::Base ' \
                   'descendents from other gems when layering schemas.'
 
-  s.files = Dir['{app,config,db,lib}/**/*'] + ['LICENSE', 'Rakefile', 'README.md']
+  s.files = Dir['{app,config,lib}/**/*'] + ['LICENSE', 'Rakefile', 'README.md'] + Dir['spec/support/**/*.rb']
 
   # uses ActiveSupport.on_load to include concerns
   # it is only defined in version 3.0.0 and newer
