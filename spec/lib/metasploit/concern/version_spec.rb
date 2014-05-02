@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-require 'spec_helper'
-
 describe Metasploit::Concern::Version do
   context 'CONSTANTS' do
     context 'MAJOR' do
@@ -54,16 +52,34 @@ describe Metasploit::Concern::Version do
             expect(defined? described_class::PRERELEASE).to be_nil
           end
         else
-          feature_regex = /(feature|staging)\/(?<prerelease>.*)/
-          match = branch.match(feature_regex)
+          branch_regex = /\A(feature|staging)\/(?<prerelease>.*)\z/
+          match = branch.match(branch_regex)
 
           if match
             it 'matches the branch relative name' do
               expect(prerelease).to eq(match[:prerelease])
             end
           else
-            it 'has a abbreviated reference that can be parsed for prerelease' do
-              fail "Do not know how to parse #{branch.inspect} for PRERELEASE"
+            tag_regex = /\Av(?<major>\d+).(?<minor>\d+).(?<patch>\d+)(-(?<prerelease>.*))?\z/
+            # travis-ci sets TRAVIS_BRANCH to the tag name for tag builds
+            match = branch.match(tag_regex)
+
+            if match
+              tag_prerelease = match[:prerelease]
+
+              if tag_prerelease
+                it 'matches the tag prerelease' do
+                  expect(prerelease).to eq(tag_prerelease)
+                end
+              else
+                it 'does not have a PRERELEASE' do
+                  expect(defined? described_class::PRERELEASE).to be_nil
+                end
+              end
+            else
+              it 'has a abbreviated reference that can be parsed for prerelease' do
+                fail "Do not know how to parse #{branch.inspect} for PRERELEASE"
+              end
             end
           end
         end
