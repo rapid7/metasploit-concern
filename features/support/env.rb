@@ -18,6 +18,6 @@ require 'aruba/jruby'
 
 if ['jruby', 'rbx'].include? RUBY_ENGINE
   Before do
-    @aruba_timeout_seconds = 6
+    @aruba_timeout_seconds = 12
   end
 end
