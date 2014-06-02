@@ -119,3 +119,15 @@ Using `ActiveSupport::Concern` allow you to add new associations and or validati
                  inverse_of :gem_namespace_gem_class
       end
     end
+    
+### initializers
+
+`Metasploit::Concern::Engine` defines the `'metasploit_concern.load_concerns'` initializer, which sets up
+`ActiveSupport.on_load` callbacks.  If you depend on a feature from a concern in your initializers, it is best to have
+the initializer declare that it needs to be run after `'metasploit_concern.load_concerns`:
+
+    initializer 'application_or_engine_namespace.depends_on_concerns', after: 'metasploit_concern.load_concerns' do
+      if GemNamespace::GemClass.primary.widgets.empty?
+        logger.info('No Widgets on the primary GemClass!')
+      end
+    end
