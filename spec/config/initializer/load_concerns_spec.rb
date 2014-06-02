@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'config/initializer/load_concerns' do
   it 'includes concerns' do
-    expect(Dummy::ModelWithConcern.instance_variable_defined?(:@instance_variable_from_concern)).to be_true
+    expect(Dummy::ModelWithConcern.instance_variable_defined?(:@instance_variable_from_concern)).to eq(true)
     expect(Dummy::ModelWithConcern).to respond_to :class_method_from_concern
 
     instance = Dummy::ModelWithConcern.new
