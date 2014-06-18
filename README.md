@@ -279,4 +279,8 @@ Complete these steps on DESTINATION
 When releasing new versions, the following projects may need to be updated:
 
 * [metasploit_data_models](https://github.com/rapid7/metasploit_data_models)
-* [metasploit-credential](https://github/com/rapid7/metasploit-credential)
+* [metasploit-credential](https://github.com/rapid7/metasploit-credential)
+* [metasploit-framework](https://github.com/rapid7/metasploit-framework)
+* [metasploit-pro-ui](https://github.com/rapid7/pro/tree/master/ui)
+* [metasploit-pro-engine](https://github.com/rapid7/pro/tree/master/engine)
+* [firewall_egress](https://github.com/rapid7/pro/tree/master/metamodules/firewall_egress)
