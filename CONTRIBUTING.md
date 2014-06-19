@@ -38,19 +38,6 @@ PRERELEASE = '<SUMMARY>'
 
 Make your changes or however many commits you like, commiting each with `git commit`.
 
-### `VERSION`
-
-Following the rules for [semantic versioning 2.0](http://semver.org/spec/v2.0.0.html), update [`MINOR`](lib/metasploit/concern/version.rb) and [`PATCH`](lib/metasploit/concern/version.rb) and commit the changes.
-
-#### Compatible changes
-
-If your change are compatible with the previous branch's API, then increment [`PATCH`](lib/metasploit/concern/version.rb).
-
-#### Incompatible changes
-
-If your changes are incompatible with the previous branch's API, then increment
-[`MINOR`](lib/metasploit/concern/version.rb) and reset [`PATCH`](lib/metasploit/concern/version.rb) to `0`.
-
 ### Pre-Pull Request Testing
 
 1. Run specs one last time before opening the Pull Request: `rake spec`
@@ -138,6 +125,18 @@ The 'Release Steps' are a reminder to the reviewer of the Pull Request of how to
 # Release
 
 Complete these steps on DESTINATION
+
+## `VERSION`
+
+### Compatible changes
+
+If your change are compatible with the previous branch's API, then increment [`PATCH`](lib/metasploit/concern/version.rb).
+
+### Incompatible changes
+
+If your changes are incompatible with the previous branch's API, then increment [`MINOR`](lib/metasploit/concern/version.rb) and reset [`PATCH`](lib/metasploit/concern/version.rb) to `0`.
+
+- [ ] Following the rules for [semantic versioning 2.0](http://semver.org/spec/v2.0.0.html), update [`MINOR`](lib/metasploit/concern/version.rb) and [`PATCH`](lib/metasploit/concern/version.rb) and commit the changes.
 
 ## JRuby
 - [ ] `rvm use jruby@metasploit-concern`
