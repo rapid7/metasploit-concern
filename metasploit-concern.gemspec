@@ -6,7 +6,7 @@ require 'metasploit/concern/version'
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = 'metasploit-concern'
-  s.version     = Metasploit::Concern::VERSION
+  s.version     = Metasploit::Concern::GEM_VERSION
   s.authors     = ['Luke Imhoff']
   s.email       = ['luke_imhoff@rapid7.com']
   s.homepage    = 'https://github.com/rapid7/metasploit-concern'
