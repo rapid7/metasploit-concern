@@ -17,10 +17,10 @@ group :development, :test do
   # between its dependencies, which is now handled by this constraint.
   # @todo MSP-9654
   rails_version_constraint = [
-      '>= 3.2.0',
-      '< 4.0.0'
+      '~> 4.0',
+      '< 4.1.0'
   ]
-
+  
   # Dummy app uses actionpack for ActionController, but not rails since it doesn't use activerecord.
   gem 'actionpack', *rails_version_constraint
   # Engine tasks are loaded using railtie

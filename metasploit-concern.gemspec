@@ -20,5 +20,6 @@ Gem::Specification.new do |s|
 
   # uses ActiveSupport.on_load to include concerns
   # it is only defined in version 3.0.0 and newer
-  s.add_runtime_dependency 'activesupport', '~> 3.0', '>= 3.0.0'
+  s.add_runtime_dependency 'activesupport', '~> 4.0'
+  s.add_runtime_dependency 'activemodel', '~> 4.0'
 end
