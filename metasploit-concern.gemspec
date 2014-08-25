@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{app,config,lib}/**/*'] + ['CONTRIBUTING.md', 'LICENSE', 'Rakefile', 'README.md'] + Dir['spec/support/**/*.rb']
   
-  rails_version_constraints = ['~> 4.0', '< 4.1.0']
+  rails_version_constraints = ['>= 4.0.9', '< 4.1.0']
   
   # uses ActiveSupport.on_load to include concerns
   # it is only defined in version 3.0.0 and newer

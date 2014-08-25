@@ -17,7 +17,7 @@ group :development, :test do
   # between its dependencies, which is now handled by this constraint.
   # @todo MSP-9654
   rails_version_constraint = [
-      '~> 4.0',
+      '>= 4.0.9',
       '< 4.1.0'
   ]
   
