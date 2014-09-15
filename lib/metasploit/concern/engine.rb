@@ -1,53 +1,50 @@
-begin
-  require 'rails'
-rescue LoadError => error
-  warn "rails could not be loaded, so Metasploit::Concern::Engine will not be defined: #{error}"
-else
-  module Metasploit
-    module Concern
-      class Engine < ::Rails::Engine
-        #
-        # `config`
-        #
+require 'rails'
+module Metasploit
+  module Concern
 
-        # @see http://viget.com/extend/rails-engine-testing-with-rspec-capybara-and-factorygirl
-        config.generators do |g|
-          g.assets false
-          g.helper false
-          g.test_framework :rspec, fixture: false
-        end
+    class Engine < ::Rails::Engine
+      #
+      # `config`
+      #
 
-        #
-        # `initializer`s
-        #
+      # @see http://viget.com/extend/rails-engine-testing-with-rspec-capybara-and-factorygirl
+      config.generators do |g|
+        g.assets false
+        g.helper false
+        g.test_framework :rspec, fixture: false
+      end
 
-        initializer 'metasploit_concern.load_concerns' do
-          application = Rails.application
-          engines = application.railties.engines
+      #
+      # `initializer`s
+      #
 
-          # application is an engine
-          engines = [application, *engines]
+      initializer 'metasploit_concern.load_concerns' do
+        application = Rails.application
+        engines = application.railties.engines
 
-          engines.each do |engine|
-            concerns_path = engine.paths['app/concerns']
+        # application is an engine
+        engines = [application, *engines]
 
-            if concerns_path
-              concerns_directories = concerns_path.existent_directories
-            else
-              # app/concerns is not set, so just derive it from root.  Cannot derive from app because it will glob app/models too
-              concerns_directories = [engine.root.join('app', 'concerns').to_path]
-            end
+        engines.each do |engine|
+          concerns_path = engine.paths['app/concerns']
 
-            concerns_directories.each do |concerns_directory|
-              concerns_pathname = Pathname.new(concerns_directory)
-              loader = Metasploit::Concern::Loader.new(root: concerns_pathname)
-              loader.register
-            end
+          if concerns_path
+            concerns_directories = concerns_path.existent_directories
+          else
+            # app/concerns is not set, so just derive it from root.  Cannot
+            # derive from app because it will glob app/models too
+            concerns_directories = [engine.root.join('app', 'concerns').to_path]
+          end
+
+          concerns_directories.each do |concerns_directory|
+            concerns_pathname = Pathname.new(concerns_directory)
+            loader = Metasploit::Concern::Loader.new(root: concerns_pathname)
+            loader.register
           end
         end
-
-        isolate_namespace Metasploit::Concern
       end
+
+      isolate_namespace Metasploit::Concern
     end
   end
 end
