@@ -12,7 +12,6 @@ require 'active_support/lazy_load_hooks'
 #
 
 require 'metasploit/concern/engine'
-
 require 'metasploit/concern/version'
 
 # Shared namespace for metasploit gems; used in {https://github.com/rapid7/metasploit-concern metasploit-concern},
