@@ -11,11 +11,7 @@ require 'active_support/lazy_load_hooks'
 # Project
 #
 
-# Only include the Rails engine when using Rails.  This is for compatibility with metasploit-framework.
-if defined? Rails
-  require 'metasploit/concern/engine'
-end
-
+require 'metasploit/concern/engine'
 require 'metasploit/concern/version'
 
 # Shared namespace for metasploit gems; used in {https://github.com/rapid7/metasploit-concern metasploit-concern},
