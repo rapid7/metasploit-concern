@@ -1,4 +1,5 @@
 require 'rails'
+
 module Metasploit
   module Concern
 
