@@ -24,4 +24,6 @@ Gem::Specification.new do |s|
   # it is only defined in version 3.0.0 and newer
   s.add_runtime_dependency 'activerecord', *rails_version_constraints
   s.add_runtime_dependency 'activesupport', *rails_version_constraints
+  # for engine
+  s.add_runtime_dependency 'railties', *rails_version_constraints
 end

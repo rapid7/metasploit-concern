@@ -58,7 +58,7 @@ describe Metasploit::Concern::Version do
               expect(prerelease).to eq(match[:prerelease])
             end
           else
-            tag_regex = /\Av(?<major>\d+).(?<minor>\d+).(?<patch>\d+)(-(?<prerelease>.*))?\z/
+            tag_regex = /\Av(?<major>\d+).(?<minor>\d+).(?<patch>\d+)(\.pre\.(?<prerelease>.*))?\z/
             # travis-ci sets TRAVIS_BRANCH to the tag name for tag builds
             match = branch.match(tag_regex)
 
@@ -66,8 +66,8 @@ describe Metasploit::Concern::Version do
               tag_prerelease = match[:prerelease]
 
               if tag_prerelease
-                it 'matches the tag prerelease' do
-                  expect(prerelease).to eq(tag_prerelease)
+                it 'matches the tag prerelease converted from a gem version to a VERSION' do
+                  expect(prerelease).to eq(tag_prerelease.gsub('.pre.', '-'))
                 end
               else
                 it 'does not have a PRERELEASE' do
