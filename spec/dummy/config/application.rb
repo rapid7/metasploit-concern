@@ -3,6 +3,8 @@ require File.expand_path('../boot', __FILE__)
 # Pick the frameworks you want:
 require 'active_model/railtie'
 
+require 'metasploit/concern/engine'
+
 Bundler.require(*Rails.groups)
 require "metasploit/concern"
 
