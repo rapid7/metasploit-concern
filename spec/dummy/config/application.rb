@@ -4,6 +4,8 @@ require File.expand_path('../boot', __FILE__)
 require 'active_model/railtie'
 require "action_controller/railtie"
 
+require 'metasploit/concern/engine'
+
 Bundler.require(*Rails.groups)
 require "metasploit/concern"
 
