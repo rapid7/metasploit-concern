@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{app,config,lib}/**/*'] + ['CONTRIBUTING.md', 'LICENSE', 'Rakefile', 'README.md'] + Dir['spec/support/**/*.rb']
 
+  s.required_ruby_version = '>= 2.1'
+
   # uses ActiveSupport.on_load to include concerns
   # it is only defined in version 3.0.0 and newer
   s.add_runtime_dependency 'activesupport', '~> 3.0', '>= 3.0.0'
