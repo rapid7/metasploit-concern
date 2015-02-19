@@ -9,8 +9,6 @@ module Metasploit
       # The patch number, scoped to the {MINOR} version number.
       PATCH = 0
 
-      PRERELEASE = 'MSP-12084-fix-metaspoloit-concern-deprecation-warnings'
-
       # The full version string, including the {MAJOR}, {MINOR}, {PATCH}, and optionally, the `PRERELEASE` in the
       # {http://semver.org/spec/v2.0.0.html semantic versioning v2.0.0} format.
       #
