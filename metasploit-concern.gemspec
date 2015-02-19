@@ -20,6 +20,9 @@ Gem::Specification.new do |s|
   
   rails_version_constraints = ['>= 4.0.9', '< 4.1.0']
   
+
+  s.required_ruby_version = '>= 2.1'
+
   # uses ActiveSupport.on_load to include concerns
   # it is only defined in version 3.0.0 and newer
   s.add_runtime_dependency 'activerecord', *rails_version_constraints
