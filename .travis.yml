@@ -4,6 +4,4 @@ env:
 language: ruby
 rvm:
   - '2.1'
-  - 'jruby-19mode'
-  - 'rbx-2'
 script: "bundle exec rake $RAKE_TASK"
