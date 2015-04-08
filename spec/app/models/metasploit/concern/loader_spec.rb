@@ -163,7 +163,7 @@ describe Metasploit::Concern::Loader do
 
   context '#constantize_pathname' do
     subject(:constantize_pathname) do
-      loader.send(:constantize_pathname, descendant_pathname)
+      loader.send(:constantize_pathname, mechanism: :constantize, pathname: descendant_pathname)
     end
 
     before(:each) do
@@ -209,7 +209,7 @@ describe Metasploit::Concern::Loader do
     #
 
     def each_pathname_constant(&block)
-      loader.each_pathname_constant(module_pathname, &block)
+      loader.each_pathname_constant(mechanism: :constantize, parent_pathname: module_pathname, &block)
     end
 
     #
@@ -376,9 +376,9 @@ describe Metasploit::Concern::Loader do
 
           expect {
             ActiveSupport::Dependencies.clear
-          }.to change {
+          }.not_to change {
                  Metasploit::Concern::ModuleWithConcerns.constants.include? concern_relative_name.to_sym
-               }.to(false)
+               }
 
           Metasploit::Concern::ModuleWithConcerns.send(
               :include,
