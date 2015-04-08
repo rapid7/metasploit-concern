@@ -85,10 +85,6 @@ class Metasploit::Concern::Loader
         loader.each_pathname_constant(module_pathname) do |concern|
           include concern
         end
-
-        if defined?(Rails) && Rails.env.development?
-          unloadable
-        end
       end
     end
   end

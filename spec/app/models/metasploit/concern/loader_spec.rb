@@ -336,10 +336,10 @@ describe Metasploit::Concern::Loader do
           ActiveSupport::Dependencies.explicitly_unloadable_constants.delete('Metasploit::Concern::ModuleWithConcerns')
         end
 
-        it 'does add module with concerns to unloadable constants' do
+        it 'does not add module with concerns to unloadable constants because it would causes required classes to no be reloaded' do
           register
 
-          expect(ActiveSupport::Dependencies.explicitly_unloadable_constants).to include('Metasploit::Concern::ModuleWithConcerns')
+          expect(ActiveSupport::Dependencies.explicitly_unloadable_constants).not_to include('Metasploit::Concern::ModuleWithConcerns')
         end
       end
 
