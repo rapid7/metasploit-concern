@@ -25,14 +25,19 @@ class Metasploit::Concern::Loader
 
   # Yields each constant under `parent_pathname`.
   #
+  # @param mechanism [:constantize, :require] `:require` if child pathname should be required so that the constant
+  #   cannot be unloaded by `ActiveSupport::Dependencies.clear`.
   # @param parent_pathname [Pathname]
   # @yield [constant]
   # @yieldparam constant [Module] constant declared under `parent_pathname`.
   # @yieldreturn [void]
   # @return [void]
-  def each_pathname_constant(parent_pathname)
+  def each_pathname_constant(mechanism:, parent_pathname:)
     parent_pathname.each_child do |child_pathname|
-      constant = constantize_pathname(child_pathname)
+      constant = constantize_pathname(
+          mechanism: mechanism,
+          pathname: child_pathname
+      )
 
       if constant
         yield constant
@@ -82,12 +87,14 @@ class Metasploit::Concern::Loader
       loader = self
 
       ActiveSupport.on_load(on_load_name) do
-        loader.each_pathname_constant(module_pathname) do |concern|
-          include concern
+        if ActiveSupport::Dependencies.autoloaded? self
+          mechanism = :constantize
+        else
+          mechanism = :require
         end
 
-        if defined?(Rails) && Rails.env.development?
-          unloadable
+        loader.each_pathname_constant(mechanism: mechanism, parent_pathname: module_pathname) do |concern|
+          include concern
         end
       end
     end
@@ -97,15 +104,23 @@ class Metasploit::Concern::Loader
 
   # Converts `descendant_pathname`, which should be under {#root}, into a constant.
   #
-  # @param descendant_pathname [Pathname] a Pathname under {#root}.
+  # @param mechanism [:constantize, :require] `:require` if pathname should be required so that the constant cannot be
+  #   unloaded by `ActiveSupport::Dependencies.clear`.
+  # @param pathname [Pathname] a Pathname under {#root}.
   # @return [Object] if {#pathname_to_constant_name} returns a constant name
   # @return [nil] otherwise
-  def constantize_pathname(descendant_pathname)
-    constant_name = pathname_to_constant_name(descendant_pathname)
+  def constantize_pathname(mechanism:, pathname:)
+    constant_name = pathname_to_constant_name(pathname)
 
     constant = nil
 
     if constant_name
+      # require before calling constantize so that the constant isn't recorded as unloadable.
+      if mechanism == :require
+        require pathname
+      end
+
+      # constantize either way as the the constant_name still needs to be converted to Module
       constant = constant_name.constantize
     end
 
