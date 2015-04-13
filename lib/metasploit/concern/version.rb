@@ -6,8 +6,10 @@ module Metasploit
       MAJOR = 0
       # The minor version number, scoped to the {MAJOR} version number.
       MINOR = 3
-      # The patch number, scoped to the {MINOR} version number.
-      PATCH = 0
+      # The patch number, scoped to the {MAJOR} and {MINOR} version numbers.
+      PATCH = 1
+      # The prerelease version, scoped to the {MAJOR}, {MINOR}, and {PATCH} version numbers.
+      PRERELEASE = 'autoload-compatibility'
 
       PRERELEASE = 'set-postgres93-travis'
 

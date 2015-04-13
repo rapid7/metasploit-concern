@@ -22,22 +22,12 @@ describe Metasploit::Concern::Loader do
       root.join('metasploit', 'concern', 'module_with_concerns')
     end
 
-    let(:metasploit_concern_module_with_concerns) do
-      Module.new do
-        ActiveSupport.run_load_hooks(:metasploit_concern_module_with_concerns, self)
-      end
-    end
-
     #
     # Callbacks
     #
 
     before(:all) do
       remove_load_hooks
-    end
-
-    before(:each) do
-      stub_const('Metasploit::Concern::ModuleWithConcerns', metasploit_concern_module_with_concerns)
     end
 
     after(:each) do
@@ -140,6 +130,16 @@ describe Metasploit::Concern::Loader do
   end
 
   around(:each) do |example|
+    mechanism_before = ActiveSupport::Dependencies.mechanism
+
+    begin
+      example.run
+    ensure
+      ActiveSupport::Dependencies.mechanism = mechanism_before
+    end
+  end
+
+  around(:each) do |example|
     autoload_paths_before = ActiveSupport::Dependencies.autoload_paths.dup
 
     begin
@@ -150,9 +150,7 @@ describe Metasploit::Concern::Loader do
   end
 
   before(:each) do
-    # add to load path so that constantize works
-    $LOAD_PATH.unshift(load_path)
-    ActiveSupport::Dependencies.autoload_paths << load_path
+    ActiveSupport::Dependencies.mechanism = :load
   end
 
   after(:each) do
@@ -165,7 +163,13 @@ describe Metasploit::Concern::Loader do
 
   context '#constantize_pathname' do
     subject(:constantize_pathname) do
-      loader.send(:constantize_pathname, descendant_pathname)
+      loader.send(:constantize_pathname, mechanism: :constantize, pathname: descendant_pathname)
+    end
+
+    before(:each) do
+      # add to load path so that constantize works
+      $LOAD_PATH.unshift(load_path)
+      ActiveSupport::Dependencies.autoload_paths << load_path
     end
 
     context 'with constant name' do
@@ -200,8 +204,22 @@ describe Metasploit::Concern::Loader do
   context '#each_pathname_constant' do
     include_context 'Metasploit::Concern::ModuleWithConcerns::ConcernForModule'
 
+    #
+    # Methods
+    #
+
     def each_pathname_constant(&block)
-      loader.each_pathname_constant(module_pathname, &block)
+      loader.each_pathname_constant(mechanism: :constantize, parent_pathname: module_pathname, &block)
+    end
+
+    #
+    # Callbacks
+    #
+
+    before(:each) do
+      # add to load path so that constantize works
+      $LOAD_PATH.unshift(load_path)
+      ActiveSupport::Dependencies.autoload_paths << load_path
     end
 
     it 'yields concerns' do
@@ -305,12 +323,107 @@ describe Metasploit::Concern::Loader do
       loader.register
     end
 
-    it 'includes concerns' do
-      expect {
-        register
-      }.to change {
-        Metasploit::Concern::ModuleWithConcerns.ancestors.map(&:name).include? concern_name
-      }.to(true)
+    context 'with base class ActiveSupport::Dependencies.autoloaded?' do
+      before(:each) do
+        module_pathname.parent.mkpath
+
+        open("#{module_pathname}.rb", 'w') do |f|
+          f.puts "class Metasploit::Concern::ModuleWithConcerns"
+          f.puts "  ActiveSupport.run_load_hooks(:metasploit_concern_module_with_concerns, self)"
+          f.puts "end"
+        end
+      end
+
+      before(:each) do
+        $LOAD_PATH.unshift(load_path)
+        ActiveSupport::Dependencies.autoload_paths << load_path
+      end
+
+      after(:each) do
+        Metasploit::Concern.send(:remove_const, :ModuleWithConcerns)
+      end
+
+      context 'false' do
+        #
+        # Callbacks
+        #
+
+        before(:each) do
+          Metasploit::Concern.autoload :ModuleWithConcerns, 'metasploit/concern/module_with_concerns.rb'
+        end
+
+        it 'has base class loaded' do
+          expect {
+            Metasploit::Concern::ModuleWithConcerns
+          }.not_to raise_error
+
+          expect(Metasploit::Concern::ModuleWithConcerns).to be_a Class
+        end
+
+        it 'includes concerns' do
+          expect {
+            register
+          }.to change {
+                 Metasploit::Concern::ModuleWithConcerns.ancestors.map(&:name).include? concern_name
+               }.to(true)
+        end
+
+        it 'does not end up with two copies of concern when reloaded' do
+          register
+
+          Metasploit::Concern::ModuleWithConcerns
+          expect(Metasploit::Concern::ModuleWithConcerns.ancestors.map(&:name).count(concern_name)).to eq(1)
+
+          expect {
+            ActiveSupport::Dependencies.clear
+          }.not_to change {
+                 Metasploit::Concern::ModuleWithConcerns.constants.include? concern_relative_name.to_sym
+               }
+
+          Metasploit::Concern::ModuleWithConcerns.send(
+              :include,
+              Metasploit::Concern::ModuleWithConcerns::ConcernForModule
+          )
+
+          expect(Metasploit::Concern::ModuleWithConcerns.ancestors.map(&:name).count(concern_name)).to eq(1)
+        end
+      end
+
+      context 'true' do
+        it 'has base class loaded' do
+          expect {
+            Metasploit::Concern::ModuleWithConcerns
+          }.not_to raise_error
+
+          expect(Metasploit::Concern::ModuleWithConcerns).to be_a Class
+        end
+
+        it 'includes concerns' do
+          expect {
+            register
+          }.to change {
+                 Metasploit::Concern::ModuleWithConcerns.ancestors.map(&:name).include? concern_name
+               }.to(true)
+        end
+
+        it 'does not end up with two copies of concern when reloaded and included' do
+          register
+
+          Metasploit::Concern::ModuleWithConcerns
+          expect(Metasploit::Concern::ModuleWithConcerns.ancestors.map(&:name).count(concern_name)).to eq(1)
+
+          ActiveSupport::Dependencies.clear
+          expect(Metasploit::Concern.constants).not_to include(:ModuleWithConcerns),
+                                                       'Expected Metasploit::Concern::ModuleWithConcerns to be unloaded by ActiveSupport::Dependencies.clear'
+
+          Metasploit::Concern::ModuleWithConcerns.send(
+              :include,
+              Metasploit::Concern::ModuleWithConcerns::ConcernForModule
+          )
+
+          expect(Metasploit::Concern::ModuleWithConcerns.ancestors.map(&:name).count(concern_name)).to eq(1)
+        end
+      end
     end
 
     # rspec run with Rails loaded for Rails::Engine, so no need to stub Rails
@@ -336,10 +449,10 @@ describe Metasploit::Concern::Loader do
           ActiveSupport::Dependencies.explicitly_unloadable_constants.delete('Metasploit::Concern::ModuleWithConcerns')
         end
 
-        it 'does add module with concerns to unloadable constants' do
+        it 'does not add module with concerns to unloadable constants because it would causes required classes to no be reloaded' do
           register
 
-          expect(ActiveSupport::Dependencies.explicitly_unloadable_constants).to include('Metasploit::Concern::ModuleWithConcerns')
+          expect(ActiveSupport::Dependencies.explicitly_unloadable_constants).not_to include('Metasploit::Concern::ModuleWithConcerns')
         end
       end
 
