@@ -1,11 +1,8 @@
 addons:
   postgresql: '9.3'
 cache: bundler
-env:
-  - RAKE_TASK=features
-  - RAKE_TASK=spec
 language: ruby
 rvm:
   - '2.1'
-script: "bundle exec rake $RAKE_TASK"
+script: "bundle exec rake features spec"
 sudo: false
