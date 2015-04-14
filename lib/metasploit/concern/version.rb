@@ -5,9 +5,11 @@ module Metasploit
       # The major version number.
       MAJOR = 0
       # The minor version number, scoped to the {MAJOR} version number.
-      MINOR = 3
+      MINOR = 4
       # The patch number, scoped to the {MAJOR} and {MINOR} version numbers.
-      PATCH = 1
+      PATCH = 0
+      # The prerelease version, scoped to the {MAJOR}, {MINOR}, and {PATCH} version numbers.
+      PRERELEASE = 'app-concerns-eager-load'
 
       # The full version string, including the {MAJOR}, {MINOR}, {PATCH}, and optionally, the `PRERELEASE` in the
       # {http://semver.org/spec/v2.0.0.html semantic versioning v2.0.0} format.
