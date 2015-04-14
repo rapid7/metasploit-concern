@@ -4,6 +4,8 @@
 
 # `String#underscore``
 require 'active_support/core_ext/string/inflections'
+# `ActiveSupport::Autoload`
+require 'active_support/dependencies/autoload'
 # `ActiveSupport.run_load_hooks`
 require 'active_support/lazy_load_hooks'
 
