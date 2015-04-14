@@ -1,3 +1,5 @@
+addons:
+  postgresql: '9.3'
 env:
   - RAKE_TASK=features
   - RAKE_TASK=spec
@@ -5,5 +7,4 @@ language: ruby
 rvm:
   - '2.1'
 script: "bundle exec rake $RAKE_TASK"
-addons:
-  postgresql: '9.3'
+sudo: false
