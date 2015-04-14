@@ -46,10 +46,6 @@ describe Metasploit::Concern::Engine do
           end
 
           context 'with `eager_load: true`' do
-            #
-            # lets
-            #
-
             let(:engine) {
               Class.new(Rails::Engine) do
                 config.paths.add 'app/concerns', eager_load: true
@@ -71,20 +67,38 @@ describe Metasploit::Concern::Engine do
           end
 
           context 'without `eager_load: true`' do
-            #
-            # lets
-            #
+            context 'with `autoload: true`' do
+              let(:engine) {
+                Class.new(Rails::Engine) do
+                  config.paths.add 'app/concerns', autoload: true
+                end
+              }
 
-            let(:engine) {
-              Class.new(Rails::Engine) do
-                config.paths.add 'app/concerns'
+              it 'does not raise error' do
+                expect {
+                  load_concerns.run
+                }.not_to raise_error
               end
-            }
+            end
 
-            it 'does not raise Metasploit::Concern::Error::EagerLoad' do
-              expect {
-                load_concerns.run
-              }.not_to raise_error
+            context 'without `autoload: true`' do
+              let(:engine) {
+                Class.new(Rails::Engine) do
+                  config.paths.add 'app/concerns'
+                end
+              }
+
+              it 'raises Metasploit::Concern::Error::SkipAutoLoad' do
+                expect {
+                  load_concerns.run
+                }.to raise_error Metasploit::Concern::Error::SkipAutoload,
+                                 "#{engine}'s `app/concerns` is marked as `autoload: false`.  Declare `app/concerns` " \
+                                 "as autoloading:\n" \
+                                 "\n" \
+                                 "  class #{engine} < Rails::Engine\n" \
+                                 "    config.paths.add 'app/concerns', autoload: true\n" \
+                                 "  end\n"
+              end
             end
           end
         end

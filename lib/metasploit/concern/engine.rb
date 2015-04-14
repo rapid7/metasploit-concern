@@ -34,6 +34,10 @@ module Metasploit
               raise Metasploit::Concern::Error::EagerLoad, engine
             end
 
+            unless concerns_path.autoload?
+              raise Metasploit::Concern::Error::SkipAutoload, engine
+            end
+
             concerns_directories = concerns_path.existent_directories
           else
             # app/concerns is not set, so just derive it from root.  Cannot

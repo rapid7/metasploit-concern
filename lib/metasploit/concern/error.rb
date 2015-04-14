@@ -4,4 +4,5 @@ module Metasploit::Concern::Error
 
   autoload :Base
   autoload :EagerLoad
+  autoload :SkipAutoload
 end
