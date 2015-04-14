@@ -77,6 +77,11 @@ module Metasploit
   #     end
   #   end
   module Concern
+    extend ActiveSupport::Autoload
+
+    autoload :Error
+    autoload :EagerLoadError
+
     # @note If `Rails` is loaded and {Metasploit::Concern::Engine} is defined, just use
     #   `Metasploit::Concern::Engine.root`.
     #

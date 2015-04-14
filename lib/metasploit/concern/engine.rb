@@ -30,6 +30,10 @@ module Metasploit
           concerns_path = engine.paths['app/concerns']
 
           if concerns_path
+            if concerns_path.eager_load?
+              raise Metasploit::Concern::Error::EagerLoad, engine
+            end
+
             concerns_directories = concerns_path.existent_directories
           else
             # app/concerns is not set, so just derive it from root.  Cannot
