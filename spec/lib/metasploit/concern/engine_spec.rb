@@ -37,6 +37,7 @@ describe Metasploit::Concern::Engine do
           #
 
           before(:each) do
+            stub_const('ApplicationUnderTest', application)
             stub_const('EngineUnderTest', engine)
 
             railties = double(engines: [engine])
@@ -68,16 +69,51 @@ describe Metasploit::Concern::Engine do
 
           context 'without `eager_load: true`' do
             context 'with `autoload: true`' do
+              #
+              # lets
+              #
+
               let(:engine) {
+                root = self.root
+
                 Class.new(Rails::Engine) do
+                  config.root = root
                   config.paths.add 'app/concerns', autoload: true
                 end
               }
+
+              let(:root) {
+                Pathname.new(Dir.mktmpdir)
+              }
+
+              #
+              # Callbacks
+              #
+
+              before(:each) do
+                root.join('app', 'concerns').mkpath
+              end
+
+              after(:each) do
+                root.rmtree
+              end
 
               it 'does not raise error' do
                 expect {
                   load_concerns.run
                 }.not_to raise_error
+              end
+
+              it "creates Metasploit::Concern::Loader for engine's app/concerns" do
+                expect(Metasploit::Concern::Loader).to receive(:new).with(
+                                                           hash_including(
+                                                               root: root.join('app', 'concerns')
+                                                           )
+                                                       ).and_return(
+                                                           double(register: nil)
+                                                       )
+
+                load_concerns.run
               end
             end
 
@@ -101,6 +137,10 @@ describe Metasploit::Concern::Engine do
               end
             end
           end
+        end
+
+        context "without 'app/concerns'" do
+
         end
       end
     end
