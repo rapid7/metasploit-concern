@@ -30,17 +30,21 @@ module Metasploit
           concerns_path = engine.paths['app/concerns']
 
           if concerns_path
-            concerns_directories = concerns_path.existent_directories
-          else
-            # app/concerns is not set, so just derive it from root.  Cannot
-            # derive from app because it will glob app/models too
-            concerns_directories = [engine.root.join('app', 'concerns').to_path]
-          end
+            if concerns_path.eager_load?
+              raise Metasploit::Concern::Error::EagerLoad, engine
+            end
 
-          concerns_directories.each do |concerns_directory|
-            concerns_pathname = Pathname.new(concerns_directory)
-            loader = Metasploit::Concern::Loader.new(root: concerns_pathname)
-            loader.register
+            unless concerns_path.autoload?
+              raise Metasploit::Concern::Error::SkipAutoload, engine
+            end
+
+            concerns_directories = concerns_path.existent_directories
+
+            concerns_directories.each do |concerns_directory|
+              concerns_pathname = Pathname.new(concerns_directory)
+              loader = Metasploit::Concern::Loader.new(root: concerns_pathname)
+              loader.register
+            end
           end
         end
       end

@@ -4,6 +4,8 @@
 
 # `String#underscore``
 require 'active_support/core_ext/string/inflections'
+# `ActiveSupport::Autoload`
+require 'active_support/dependencies/autoload'
 # `ActiveSupport.run_load_hooks`
 require 'active_support/lazy_load_hooks'
 
@@ -77,6 +79,11 @@ module Metasploit
   #     end
   #   end
   module Concern
+    extend ActiveSupport::Autoload
+
+    autoload :Error
+    autoload :EagerLoadError
+
     # @note If `Rails` is loaded and {Metasploit::Concern::Engine} is defined, just use
     #   `Metasploit::Concern::Engine.root`.
     #
