@@ -13,39 +13,39 @@ describe Metasploit::Concern::Engine do
       end
 
       context 'with engine' do
+        #
+        # lets
+        #
+
+        let(:application) {
+          Class.new(Rails::Engine)
+        }
+
+        let(:context) {
+          Object.new
+        }
+
+        let(:load_concerns) {
+          described_class.initializers.find { |initializer|
+            initializer.name == "metasploit_concern.load_concerns"
+          }.bind(context)
+        }
+
+        #
+        # Callbacks
+        #
+
+        before(:each) do
+          stub_const('ApplicationUnderTest', application)
+          stub_const('EngineUnderTest', engine)
+
+          railties = double(engines: [engine])
+
+          allow(application).to receive(:railties).and_return(railties)
+          allow(Rails).to receive(:application).and_return(application)
+        end
+
         context "with 'app/concerns'" do
-          #
-          # lets
-          #
-
-          let(:application) {
-            Class.new(Rails::Engine)
-          }
-
-          let(:context) {
-            Object.new
-          }
-
-          let(:load_concerns) {
-            described_class.initializers.find { |initializer|
-              initializer.name == "metasploit_concern.load_concerns"
-            }.bind(context)
-          }
-
-          #
-          # Callbacks
-          #
-
-          before(:each) do
-            stub_const('ApplicationUnderTest', application)
-            stub_const('EngineUnderTest', engine)
-
-            railties = double(engines: [engine])
-
-            allow(application).to receive(:railties).and_return(railties)
-            allow(Rails).to receive(:application).and_return(application)
-          end
-
           context 'with `eager_load: true`' do
             let(:engine) {
               Class.new(Rails::Engine) do
@@ -140,7 +140,39 @@ describe Metasploit::Concern::Engine do
         end
 
         context "without 'app/concerns'" do
+          #
+          # lets
+          #
 
+          let(:engine) {
+            root = self.root
+
+            Class.new(Rails::Engine) do
+              config.root = root
+            end
+          }
+
+          let(:root) {
+            Pathname.new(Dir.mktmpdir)
+          }
+
+          #
+          # Callbacks
+          #
+
+          before(:each) do
+            root.join('app', 'concerns').mkpath
+          end
+
+          after(:each) do
+            root.rmtree
+          end
+
+          it "does not create Metasploit::Concern::Loader for engine's <root>/app/concerns" do
+            expect(Metasploit::Concern::Loader).not_to receive(:new)
+
+            load_concerns.run
+          end
         end
       end
     end
