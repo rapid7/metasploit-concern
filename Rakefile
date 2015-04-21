@@ -30,11 +30,17 @@ Dir.glob(rakefile_glob) do |rakefile|
   load rakefile
 end
 
-require 'cucumber'
-require 'cucumber/rake/task'
-
-Cucumber::Rake::Task.new(:features) do |t|
-  t.cucumber_opts = 'features --format pretty'
+begin
+  require 'cucumber'
+  require 'cucumber/rake/task'
+rescue LoadError
+  puts "cucumber not in bundle, so can't set up features task.  " \
+       "To run features ensure to install the development and test groups."
+  print_without = true
+else
+  Cucumber::Rake::Task.new(:features) do |t|
+    t.cucumber_opts = 'features --format pretty'
+  end
 end
 
 begin
@@ -50,6 +56,19 @@ else
   RSpec::Core::RakeTask.new(:spec)
 
   task :default => :spec
+end
+
+# Use find_all_by_name instead of find_by_name as find_all_by_name will return pre-release versions
+gem_specification = Gem::Specification.find_all_by_name('metasploit-yard').first
+
+if gem_specification
+  Dir[File.join(gem_specification.gem_dir, 'lib', 'tasks', '**', '*.rake')].each do |rake|
+    load rake
+  end
+else
+  puts "metasploit-yard not in bundle, so can't setup yard tasks. " \
+       "To run yard ensure to install the development group."
+  print_without = true
 end
 
 if print_without

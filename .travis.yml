@@ -4,5 +4,5 @@ cache: bundler
 language: ruby
 rvm:
   - '2.1'
-script: "bundle exec rake features spec"
+script: "bundle exec rake features spec yard"
 sudo: false
