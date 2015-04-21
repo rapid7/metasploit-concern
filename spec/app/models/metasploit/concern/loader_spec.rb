@@ -339,10 +339,6 @@ describe Metasploit::Concern::Loader do
         ActiveSupport::Dependencies.autoload_paths << load_path
       end
 
-      after(:each) do
-        Metasploit::Concern.send(:remove_const, :ModuleWithConcerns)
-      end
-
       context 'false' do
         #
         # Callbacks
@@ -350,6 +346,10 @@ describe Metasploit::Concern::Loader do
 
         before(:each) do
           Metasploit::Concern.autoload :ModuleWithConcerns, 'metasploit/concern/module_with_concerns.rb'
+        end
+
+        after(:each) do
+          Metasploit::Concern.send(:remove_const, :ModuleWithConcerns)
         end
 
         it 'has base class loaded' do
@@ -390,6 +390,10 @@ describe Metasploit::Concern::Loader do
       end
 
       context 'true' do
+        after(:each) do
+          ActiveSupport::Dependencies.clear
+        end
+
         it 'has base class loaded' do
           expect {
             Metasploit::Concern::ModuleWithConcerns
