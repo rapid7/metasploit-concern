@@ -7,7 +7,9 @@ module Metasploit
       # The minor version number, scoped to the {MAJOR} version number.
       MINOR = 5
       # The patch number, scoped to the {MAJOR} and {MINOR} version numbers.
-      PATCH = 0
+      PATCH = 1
+      # The prerelease version number, scoped to the {MAJOR}, {MINOR}, and {PATCH} version numbers.
+      PRERELEASE = 'circular-dependency-master'
 
       # The full version string, including the {MAJOR}, {MINOR}, {PATCH}, and optionally, the `PRERELEASE` in the
       # {http://semver.org/spec/v2.0.0.html semantic versioning v2.0.0} format.
