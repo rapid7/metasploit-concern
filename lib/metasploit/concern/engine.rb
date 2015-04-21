@@ -2,7 +2,8 @@ require 'rails'
 
 module Metasploit
   module Concern
-
+    # Rails engine for Metasploit::Concern that sets up an initializer to load the concerns from app/concerns in other
+    # Rails engines.
     class Engine < ::Rails::Engine
       #
       # `config`
