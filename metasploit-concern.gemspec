@@ -17,6 +17,9 @@ Gem::Specification.new do |s|
                   'descendents from other gems when layering schemas.'
 
   s.files = Dir['{app,config,lib}/**/*'] + ['CONTRIBUTING.md', 'LICENSE', 'Rakefile', 'README.md'] + Dir['spec/support/**/*.rb']
+  
+  rails_version_constraints = ['>= 4.0.9', '< 4.1.0']
+  
 
   s.required_ruby_version = '>= 2.1'
 
@@ -24,7 +27,8 @@ Gem::Specification.new do |s|
 
   # uses ActiveSupport.on_load to include concerns
   # it is only defined in version 3.0.0 and newer
-  s.add_runtime_dependency 'activesupport', '~> 3.0', '>= 3.0.0'
+  s.add_runtime_dependency 'activerecord', *rails_version_constraints
+  s.add_runtime_dependency 'activesupport', *rails_version_constraints
   # for engine
-  s.add_runtime_dependency 'railties', '< 4.0.0'
+  s.add_runtime_dependency 'railties', *rails_version_constraints
 end
