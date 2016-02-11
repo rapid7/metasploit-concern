@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Metasploit::Concern::Loader do
+RSpec.describe Metasploit::Concern::Loader do
   shared_context 'Metasploit::Concern::ModuleWithConcerns' do
     #
     # Methods
@@ -26,11 +26,11 @@ describe Metasploit::Concern::Loader do
     # Callbacks
     #
 
-    before(:all) do
+    before(:context) do
       remove_load_hooks
     end
 
-    after(:each) do
+    after(:example) do
       remove_load_hooks
     end
   end
@@ -58,7 +58,7 @@ describe Metasploit::Concern::Loader do
     # Callbacks
     #
 
-    before(:each) do
+    before(:example) do
       concern_pathname.parent.mkpath
 
       concern_pathname.open('w') do |f|
@@ -67,7 +67,7 @@ describe Metasploit::Concern::Loader do
       end
     end
 
-    after(:each) do
+    after(:example) do
       ActiveSupport::Dependencies.clear
     end
   end
@@ -105,11 +105,11 @@ describe Metasploit::Concern::Loader do
   #
 
   # clean up interrupted run
-  before(:all) do
+  before(:context) do
     remove_root
   end
 
-  around(:each) do |example|
+  around(:example) do |example|
     loaded_features_before = $LOADED_FEATURES.dup
 
     begin
@@ -119,7 +119,7 @@ describe Metasploit::Concern::Loader do
     end
   end
 
-  around(:each) do |example|
+  around(:example) do |example|
     load_path_before = $LOAD_PATH.dup
 
     begin
@@ -129,7 +129,7 @@ describe Metasploit::Concern::Loader do
     end
   end
 
-  around(:each) do |example|
+  around(:example) do |example|
     mechanism_before = ActiveSupport::Dependencies.mechanism
 
     begin
@@ -139,7 +139,7 @@ describe Metasploit::Concern::Loader do
     end
   end
 
-  around(:each) do |example|
+  around(:example) do |example|
     autoload_paths_before = ActiveSupport::Dependencies.autoload_paths.dup
 
     begin
@@ -149,16 +149,16 @@ describe Metasploit::Concern::Loader do
     end
   end
 
-  before(:each) do
+  before(:example) do
     ActiveSupport::Dependencies.mechanism = :load
   end
 
-  after(:each) do
+  after(:example) do
     remove_root
   end
 
   context 'validations' do
-    it { should validate_presence_of :root }
+    it { is_expected.to validate_presence_of :root }
   end
 
   context '#constantize_pathname' do
@@ -166,7 +166,7 @@ describe Metasploit::Concern::Loader do
       loader.send(:constantize_pathname, mechanism: :constantize, pathname: descendant_pathname)
     end
 
-    before(:each) do
+    before(:example) do
       # add to load path so that constantize works
       $LOAD_PATH.unshift(load_path)
       ActiveSupport::Dependencies.autoload_paths << load_path
@@ -197,7 +197,7 @@ describe Metasploit::Concern::Loader do
         module_pathname.join("concern_for_module#{invalid_extension}")
       end
 
-      it { should be_nil }
+      it { is_expected.to be_nil }
     end
   end
 
@@ -216,7 +216,7 @@ describe Metasploit::Concern::Loader do
     # Callbacks
     #
 
-    before(:each) do
+    before(:example) do
       # add to load path so that constantize works
       $LOAD_PATH.unshift(load_path)
       ActiveSupport::Dependencies.autoload_paths << load_path
@@ -238,7 +238,7 @@ describe Metasploit::Concern::Loader do
       loader.glob
     end
 
-    it { should be_a Pathname }
+    it { is_expected.to be_a Pathname }
 
     it 'is all .rb files under #root' do
       expect(glob).to eq(root.join('**', '*.rb'))
@@ -260,7 +260,7 @@ describe Metasploit::Concern::Loader do
       root.join('metasploit', 'concern', 'module_without_concerns')
     end
 
-    before(:each) do
+    before(:example) do
       non_module_pathname.mkpath
 
       expected_module_pathnames.each do |expected_module_pathname|
@@ -273,7 +273,7 @@ describe Metasploit::Concern::Loader do
       end
     end
 
-    it { should be_a Set }
+    it { is_expected.to be_a Set }
 
     it 'includes directories under #root that have .rb files' do
       expected_module_pathnames.each do |expected_module_pathname|
@@ -311,7 +311,7 @@ describe Metasploit::Concern::Loader do
           '.rb.bak'
         end
 
-        it { should be_nil }
+        it { is_expected.to be_nil }
       end
     end
   end
@@ -324,7 +324,7 @@ describe Metasploit::Concern::Loader do
     end
 
     context 'with base class ActiveSupport::Dependencies.autoloaded?' do
-      before(:each) do
+      before(:example) do
         module_pathname.parent.mkpath
 
         open("#{module_pathname}.rb", 'w') do |f|
@@ -334,7 +334,7 @@ describe Metasploit::Concern::Loader do
         end
       end
 
-      before(:each) do
+      before(:example) do
         $LOAD_PATH.unshift(load_path)
         ActiveSupport::Dependencies.autoload_paths << load_path
       end
@@ -344,11 +344,11 @@ describe Metasploit::Concern::Loader do
         # Callbacks
         #
 
-        before(:each) do
+        before(:example) do
           Metasploit::Concern.autoload :ModuleWithConcerns, 'metasploit/concern/module_with_concerns.rb'
         end
 
-        after(:each) do
+        after(:example) do
           Metasploit::Concern.send(:remove_const, :ModuleWithConcerns)
         end
 
@@ -390,7 +390,7 @@ describe Metasploit::Concern::Loader do
       end
 
       context 'true' do
-        after(:each) do
+        after(:example) do
           ActiveSupport::Dependencies.clear
         end
 
@@ -445,11 +445,11 @@ describe Metasploit::Concern::Loader do
         # Callbacks
         #
 
-        before(:each) do
+        before(:example) do
           allow(Rails).to receive(:env).and_return(env)
         end
 
-        after(:each) do
+        after(:example) do
           ActiveSupport::Dependencies.explicitly_unloadable_constants.delete('Metasploit::Concern::ModuleWithConcerns')
         end
 

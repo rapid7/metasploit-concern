@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Metasploit::Concern do
+RSpec.describe Metasploit::Concern do
   context 'CONSTANTS' do
     context 'VERSION' do
       subject(:version) do

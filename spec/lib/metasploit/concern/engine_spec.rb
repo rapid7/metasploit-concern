@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Metasploit::Concern::Engine do
+RSpec.describe Metasploit::Concern::Engine do
   context 'initializers' do
     context 'metasploit_concern.load_concerns' do
       it 'includes concerns' do
@@ -28,14 +28,14 @@ describe Metasploit::Concern::Engine do
         let(:load_concerns) {
           described_class.initializers.find { |initializer|
             initializer.name == "metasploit_concern.load_concerns"
-          }.bind(context)
+          }.bind(RSpec.context)
         }
 
         #
         # Callbacks
         #
 
-        before(:each) do
+        before(:example) do
           stub_const('ApplicationUnderTest', application)
           stub_const('EngineUnderTest', engine)
 
@@ -90,11 +90,11 @@ describe Metasploit::Concern::Engine do
               # Callbacks
               #
 
-              before(:each) do
+              before(:example) do
                 root.join('app', 'concerns').mkpath
               end
 
-              after(:each) do
+              after(:example) do
                 root.rmtree
               end
 
@@ -160,11 +160,11 @@ describe Metasploit::Concern::Engine do
           # Callbacks
           #
 
-          before(:each) do
+          before(:example) do
             root.join('app', 'concerns').mkpath
           end
 
-          after(:each) do
+          after(:example) do
             root.rmtree
           end
 

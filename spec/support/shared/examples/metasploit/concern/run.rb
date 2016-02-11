@@ -1,4 +1,4 @@
-shared_examples_for 'Metasploit::Concern.run' do
+RSpec.shared_examples_for 'Metasploit::Concern.run' do
   let(:load_hook_name) {
     described_class.name.underscore.gsub('/', '_').to_sym
   }

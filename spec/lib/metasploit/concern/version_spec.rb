@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe Metasploit::Concern::Version do
+RSpec.describe Metasploit::Concern::Version do
   context 'CONSTANTS' do
     context 'MAJOR' do
       subject(:major) do
         described_class::MAJOR
       end
 
-      it { should be_a Integer }
+      it { is_expected.to be_a Integer }
     end
 
     context 'MINOR' do
@@ -15,7 +15,7 @@ describe Metasploit::Concern::Version do
         described_class::MINOR
       end
 
-      it { should be_a Integer }
+      it { is_expected.to be_a Integer }
     end
 
     context 'PATCH' do
@@ -23,7 +23,7 @@ describe Metasploit::Concern::Version do
         described_class::PATCH
       end
 
-      it { should be_a Integer }
+      it { is_expected.to be_a Integer }
     end
 
     pull_request = ENV['TRAVIS_PULL_REQUEST']
@@ -106,7 +106,7 @@ describe Metasploit::Concern::Version do
       3
     end
 
-    before(:each) do
+    before(:example) do
       stub_const("#{described_class}::MAJOR", major)
       stub_const("#{described_class}::MINOR", minor)
       stub_const("#{described_class}::PATCH", patch)
@@ -117,7 +117,7 @@ describe Metasploit::Concern::Version do
         'prerelease'
       end
 
-      before(:each) do
+      before(:example) do
         stub_const("#{described_class}::PRERELEASE", prerelease)
       end
 
@@ -127,7 +127,7 @@ describe Metasploit::Concern::Version do
     end
 
     context 'without PRERELEASE' do
-      before(:each) do
+      before(:example) do
         hide_const("#{described_class}::PRERELEASE")
       end
 

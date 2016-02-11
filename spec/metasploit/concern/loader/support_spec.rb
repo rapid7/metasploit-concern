@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Metasploit::Concern.run shared example' do
+RSpec.describe 'Metasploit::Concern.run shared example' do
   subject(:instance) {
     described_class.new
   }
@@ -21,7 +21,7 @@ describe 'Metasploit::Concern.run shared example' do
   # Callbacks
   #
 
-  before(:each) do
+  before(:example) do
     stub_const(name, described_class)
 
     described_class.class_eval do
