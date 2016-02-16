@@ -9,7 +9,7 @@ module Metasploit
       # The patch number, scoped to the {MINOR} version number.
       PATCH = 1
 
-      PRERELEASE = attr_reader engines-is-deprecated
+      PRERELEASE = engines-is-deprecated
 
 
       # The full version string, including the {MAJOR}, {MINOR}, {PATCH}, and optionally, the `PRERELEASE` in the
