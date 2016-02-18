@@ -8,7 +8,7 @@ module Metasploit
       MINOR = 0
       # The patch number, scoped to the {MINOR} version number.
       PATCH = 1
-
+      # Prerelease tag
       PRERELEASE = 'engines-is-deprecated'
 
 
