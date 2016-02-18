@@ -1,4 +1,6 @@
 require 'rails'
+
+
 # Refinement that returns engines method to Rails::Engine::Railties
 # so that we can access the engines deprecated in Rails 4.1
 module SupportEngines
@@ -10,6 +12,7 @@ module SupportEngines
     end
   end
 end
+
 
 module Metasploit
   module Concern
