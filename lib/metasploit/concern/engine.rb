@@ -1,9 +1,17 @@
 require 'rails'
+module SupportEngines
+  refine Rails::Engine::Railties do
+    def engines
+      @engines ||= ::Rails::Engine.subclasses.map(&:instance)
+    end
+  end
+end
 
 module Metasploit
   module Concern
     # Rails engine for Metasploit::Concern that sets up an initializer to load the concerns from app/concerns in other
     # Rails engines.
+    using SupportEngines
     class Engine < ::Rails::Engine
       #
       # `config`
