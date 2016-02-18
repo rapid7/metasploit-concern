@@ -8,10 +8,9 @@ module Metasploit
       MINOR = 0
       # The patch number, scoped to the {MINOR} version number.
       PATCH = 1
-
+      # Prerelease tag
       PRERELEASE = 'rails-upgrade'
       
-
       # The full version string, including the {MAJOR}, {MINOR}, {PATCH}, and optionally, the `PRERELEASE` in the
       # {http://semver.org/spec/v2.0.0.html semantic versioning v2.0.0} format.
       #
