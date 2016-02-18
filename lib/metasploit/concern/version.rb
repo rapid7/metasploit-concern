@@ -9,7 +9,7 @@ module Metasploit
       # The patch number, scoped to the {MINOR} version number.
       PATCH = 1
 
-      PRERELEASE = rails-4-upgrade
+      PRERELEASE = 'rails-upgrade'
 
 
       # The full version string, including the {MAJOR}, {MINOR}, {PATCH}, and optionally, the `PRERELEASE` in the
