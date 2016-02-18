@@ -1,7 +1,11 @@
 require 'rails'
+# Refinement that returns engines method to Rails::Engine::Railties
+# so that we can access the engines deprecated in Rails 4.1
 module SupportEngines
+
   refine Rails::Engine::Railties do
     def engines
+      # method that returns all current engines
       @engines ||= ::Rails::Engine.subclasses.map(&:instance)
     end
   end
@@ -12,6 +16,7 @@ module Metasploit
     # Rails engine for Metasploit::Concern that sets up an initializer to load the concerns from app/concerns in other
     # Rails engines.
     using SupportEngines
+    # to apply the refinement
     class Engine < ::Rails::Engine
       #
       # `config`
