@@ -1,17 +1,9 @@
 require 'rails'
-
+require File.expand_path("../support_engines", __FILE__)
 
 # Refinement that returns engines method to Rails::Engine::Railties
 # so that we can access the engines deprecated in Rails 4.1
-module SupportEngines
 
-  refine Rails::Engine::Railties do
-    def engines
-      # method that returns all current engines
-      @engines ||= ::Rails::Engine.subclasses.map(&:instance)
-    end
-  end
-end
 
 
 module Metasploit
