@@ -19,6 +19,4 @@ Dummy::Application.configure do
   # Raise exceptions instead of rendering exception templates
   config.action_dispatch.show_exceptions = false
 
-  # Print deprecation notices to the stderr
-  config.active_support.deprecation = :stderr
 end
