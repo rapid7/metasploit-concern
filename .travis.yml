@@ -10,4 +10,4 @@ addons:
 language: ruby
 rvm:
   - 2.2
-script: "bundle exec rake spec features yard"
+script: 'bundle exec rake spec features yard --trace'
