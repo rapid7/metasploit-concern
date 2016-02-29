@@ -1,8 +1,13 @@
 addons:
-  postgresql: '9.3'
+  postgresql: '9.5'
+group: stable
+sudo: false
 cache: bundler
+addons:
+  apt:
+    packages:
+      - graphviz
 language: ruby
 rvm:
-  - '2.1'
-script: "bundle exec rake features spec yard"
-sudo: false
+  - 2.2
+script: "bundle exec rake spec features yard"
