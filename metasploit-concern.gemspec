@@ -6,7 +6,7 @@ require 'metasploit/concern/version'
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = 'metasploit-concern'
-  s.version     = Metasploit::Concern::GEM_VERSION
+  s.version     = Metasploit::Concern::VERSION
   s.authors     = ['Luke Imhoff']
   s.email       = ['luke_imhoff@rapid7.com']
   s.homepage    = 'https://github.com/rapid7/metasploit-concern'
@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.1'
 
-  s.add_development_dependency 'metasploit-yard', '~> 1.0'
+  s.add_development_dependency 'metasploit-yard', '~> 1.1'
 
   # uses ActiveSupport.on_load to include concerns
   # it is only defined in version 3.0.0 and newer
