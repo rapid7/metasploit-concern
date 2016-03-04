@@ -1,9 +1,17 @@
 require 'rails'
+require File.expand_path("../support_engines", __FILE__)
+
+# Refinement that returns engines method to Rails::Engine::Railties
+# so that we can access the engines deprecated in Rails 4.1
+
+
 
 module Metasploit
   module Concern
     # Rails engine for Metasploit::Concern that sets up an initializer to load the concerns from app/concerns in other
     # Rails engines.
+    using SupportEngines
+    # to apply the refinement
     class Engine < ::Rails::Engine
       #
       # `config`
