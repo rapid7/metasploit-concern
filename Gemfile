@@ -5,8 +5,8 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
-# gem 'metasploit-yard', github: 'rapid7/metasploit-yard', branch: 'staging/rails-upgrade'
-# gem 'metasploit-erd',  github: 'rapid7/metasploit-erd',  branch: 'staging/rails-upgrade'
+gem 'metasploit-yard', github: 'rapid7/metasploit-yard', branch: 'staging/rails-upgrade'
+gem 'metasploit-erd',  github: 'rapid7/metasploit-erd',  branch: 'staging/rails-upgrade'
 
 group :development do
   # documentation
@@ -20,8 +20,8 @@ group :development, :test do
   # between its dependencies, which is now handled by this constraint.
   # @todo MSP-9654
   rails_version_constraint = [
-      '>= 4.0.9',
-      '< 4.1.0'
+      '>= 4.1',
+      '< 4.2'
   ]
   
   # Dummy app uses actionpack for ActionController, but not rails since it doesn't use activerecord.
