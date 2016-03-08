@@ -8,6 +8,7 @@ gemspec
 gem 'metasploit-yard', github: 'rapid7/metasploit-yard', branch: 'staging/rails-upgrade'
 gem 'metasploit-erd',  github: 'rapid7/metasploit-erd',  branch: 'staging/rails-upgrade'
 
+
 group :development do
   # documentation
   gem 'yard'
@@ -28,6 +29,10 @@ group :development, :test do
   gem 'actionpack', *rails_version_constraint
   # Engine tasks are loaded using railtie
   gem 'railties', *rails_version_constraint
+  # Used for Sql Lite Db
+  gem 'sqlite3'
+  # provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking.
+  gem "minitest"
   # need rspec-rails >= 2.12.0 as 2.12.0 adds support for redefining named subject in nested context that uses the
   # named subject from the outer context without causing a stack overflow.
   gem 'rspec-rails', '>= 2.12.0'

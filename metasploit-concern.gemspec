@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
 
   # uses ActiveSupport.on_load to include concerns
   # it is only defined in version 3.0.0 and newer
-  s.add_runtime_dependency 'activerecord', *rails_version_constraints
+  s.add_runtime_dependency 'activemodel', *rails_version_constraints
   s.add_runtime_dependency 'activesupport', *rails_version_constraints
   # for engine
   s.add_runtime_dependency 'railties', *rails_version_constraints
