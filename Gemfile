@@ -29,6 +29,8 @@ group :development, :test do
   gem 'actionpack', *rails_version_constraint
   # Engine tasks are loaded using railtie
   gem 'railties', *rails_version_constraint
+  # running documentation generation tasks and rspec tasks
+  gem 'rake', '~> 10.5'
   # Used for Sql Lite Db
   gem 'sqlite3'
   # provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking.
