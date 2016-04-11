@@ -35,3 +35,6 @@ spec/tmp
 
 # aruba temporary files
 /tmp
+
+# Secrets
+spec/dummy/config/secrets.yml

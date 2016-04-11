@@ -5,8 +5,9 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
-# gem 'metasploit-yard', github: 'rapid7/metasploit-yard', branch: 'staging/rails-upgrade'
-# gem 'metasploit-erd',  github: 'rapid7/metasploit-erd',  branch: 'staging/rails-upgrade'
+gem 'metasploit-yard', github: 'rapid7/metasploit-yard', branch: 'staging/rails-upgrade'
+gem 'metasploit-erd',  github: 'rapid7/metasploit-erd',  branch: 'staging/rails-upgrade'
+
 
 group :development do
   # documentation
@@ -19,18 +20,18 @@ group :development, :test do
   # rails is not used because activerecord should not be included, but rails would normally coordinate the versions
   # between its dependencies, which is now handled by this constraint.
   # @todo MSP-9654
-  rails_version_constraint = [
-      '>= 4.0.9',
-      '< 4.1.0'
-  ]
   
   # Dummy app uses actionpack for ActionController, but not rails since it doesn't use activerecord.
-  gem 'actionpack', *rails_version_constraint
+  gem 'actionpack', '~> 4.1.15'
   # Engine tasks are loaded using railtie
-  gem 'railties', *rails_version_constraint
-  # need rspec-rails >= 2.12.0 as 2.12.0 adds support for redefining named subject in nested context that uses the
-  # named subject from the outer context without causing a stack overflow.
-  gem 'rspec-rails', '>= 2.12.0'
+  gem 'railties', '~> 4.1.15'
+  # running documentation generation tasks and rspec tasks
+  gem 'rake', '~> 10.5'
+  # Used for Sql Lite Db
+  gem 'sqlite3'
+  # provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking.
+  gem "minitest"
+  gem 'rspec-rails'
   # defines time zones for activesupport.  Must be explicit since it is normally implicit with activerecord
   gem 'tzinfo'
 end
