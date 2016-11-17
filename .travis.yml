@@ -1,13 +1,16 @@
-addons:
-  postgresql: '9.5'
 group: stable
 sudo: false
-cache: bundler
+language: ruby
 addons:
+  postgresql: '9.3'
   apt:
     packages:
       - graphviz
-language: ruby
 rvm:
-  - 2.2.4
-script: 'bundle exec rake spec features yard'
+  - 2.3.1
+before_install:
+  - gem update bundler
+script:
+  - bundle exec rake spec
+  - bundle exec rake cucumber
+  - bundle exec rake yard

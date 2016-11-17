@@ -38,7 +38,7 @@ rescue LoadError
        "To run features ensure to install the development and test groups."
   print_without = true
 else
-  Cucumber::Rake::Task.new(:features) do |t|
+  Cucumber::Rake::Task.new(:cucumber) do |t|
     t.cucumber_opts = 'features --format pretty'
   end
 end
