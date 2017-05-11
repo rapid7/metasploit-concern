@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,lib}/**/*'] + ['CONTRIBUTING.md', 'LICENSE', 'Rakefile', 'README.md'] + Dir['spec/support/**/*.rb']
 
 
-  s.required_ruby_version = '>= 2.1'
+  s.required_ruby_version = '>= 2.2.0'
 
   s.add_development_dependency 'metasploit-yard'
   s.add_development_dependency 'metasploit-erd'
