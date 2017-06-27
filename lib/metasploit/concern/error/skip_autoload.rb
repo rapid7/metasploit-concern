@@ -3,11 +3,11 @@ class Metasploit::Concern::Error::SkipAutoload < Metasploit::Concern::Error::Bas
   # @param engine [Rails::Engine] `Rails::Engine` where `engine.paths['app/concerns'].autoload?` is `false`.
   def initialize(engine)
     @engine = engine
-
+    engine_name = engine.class.name
     super(
-        "#{engine}'s `app/concerns` is marked as `autoload: false`.  Declare `app/concerns` as autoloading:\n" \
+        "#{engine_name}'s `app/concerns` is marked as `autoload: false`.  Declare `app/concerns` as autoloading:\n" \
         "\n" \
-        "  class #{engine} < Rails::Engine\n" \
+        "  class #{engine_name} < Rails::Engine\n" \
         "    config.paths.add 'app/concerns', autoload: true\n" \
         "  end\n"
     )

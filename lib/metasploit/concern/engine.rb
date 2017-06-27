@@ -26,16 +26,14 @@ module Metasploit
 
       initializer 'metasploit_concern.load_concerns' do
         application = Rails.application
-        # require 'pry'
-        # binding.pry
-        engines = application.railties._all.select{|rt| rt.is_a? Engine}
-
+        
+        engines = application.railties._all.select{|rt| rt.is_a? Rails::Engine}
+                
         # application is an engine
         engines = [application, *engines]
 
         engines.each do |engine|
           concerns_path = engine.paths['app/concerns']
-
           if concerns_path
             if concerns_path.eager_load?
               raise Metasploit::Concern::Error::EagerLoad, engine

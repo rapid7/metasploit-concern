@@ -39,7 +39,7 @@ RSpec.describe Metasploit::Concern::Engine do
           stub_const('ApplicationUnderTest', application)
           stub_const('EngineUnderTest', engine)
 
-          railties = double(engines: [engine])
+          railties = double(_all: [engine.instance])
 
           allow(application).to receive(:railties).and_return(railties)
           allow(Rails).to receive(:application).and_return(application)
