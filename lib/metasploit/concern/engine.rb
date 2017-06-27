@@ -1,5 +1,4 @@
 require 'rails'
-require File.expand_path("../support_engines", __FILE__)
 
 # Refinement that returns engines method to Rails::Engine::Railties
 # so that we can access the engines deprecated in Rails 4.1
