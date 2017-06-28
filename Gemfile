@@ -30,7 +30,6 @@ group :development, :test do
   gem 'rspec-rails'
   # defines time zones for activesupport.  Must be explicit since it is normally implicit with activerecord
   gem 'tzinfo'
-  gem 'pry'
 end
 
 group :test do

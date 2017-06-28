@@ -25,9 +25,8 @@ module Metasploit
 
       initializer 'metasploit_concern.load_concerns' do
         application = Rails.application
-        
         engines = application.railties._all.select{|rt| rt.is_a? Rails::Engine}
-                
+
         # application is an engine
         engines = [application, *engines]
 
