@@ -1,17 +1,12 @@
 require 'rails'
-require File.expand_path("../support_engines", __FILE__)
 
 # Refinement that returns engines method to Rails::Engine::Railties
 # so that we can access the engines deprecated in Rails 4.1
-
-
 
 module Metasploit
   module Concern
     # Rails engine for Metasploit::Concern that sets up an initializer to load the concerns from app/concerns in other
     # Rails engines.
-    using SupportEngines
-    # to apply the refinement
     class Engine < ::Rails::Engine
       #
       # `config`
@@ -30,14 +25,13 @@ module Metasploit
 
       initializer 'metasploit_concern.load_concerns' do
         application = Rails.application
-        engines = application.railties.engines
+        engines = application.railties._all.select{|rt| rt.is_a? Rails::Engine}
 
         # application is an engine
         engines = [application, *engines]
 
         engines.each do |engine|
           concerns_path = engine.paths['app/concerns']
-
           if concerns_path
             if concerns_path.eager_load?
               raise Metasploit::Concern::Error::EagerLoad, engine
