@@ -24,7 +24,7 @@ group :development, :test do
   # running documentation generation tasks and rspec tasks
   gem 'rake'
   # Used for Sql Lite Db
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.0'
   # provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking.
   gem "minitest"
   gem 'rspec-rails'
