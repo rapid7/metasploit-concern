@@ -26,8 +26,8 @@ Gem::Specification.new do |s|
 
   # uses ActiveSupport.on_load to include concerns
   # it is only defined in version 3.0.0 and newer
-  s.add_runtime_dependency 'activemodel', '~> 4.2.6'
-  s.add_runtime_dependency 'activesupport', '~> 4.2.6'
+  s.add_runtime_dependency 'activemodel', '~> 5.2.2'
+  s.add_runtime_dependency 'activesupport', '~> 5.2.2'
   # for engine
-  s.add_runtime_dependency 'railties', '~> 4.2.6'
+  s.add_runtime_dependency 'railties', '~> 5.2.2'
 end
