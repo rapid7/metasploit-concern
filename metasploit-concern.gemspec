@@ -7,8 +7,8 @@ require 'metasploit/concern/version'
 Gem::Specification.new do |s|
   s.name        = 'metasploit-concern'
   s.version     = Metasploit::Concern::VERSION
-  s.authors     = ['Luke Imhoff']
-  s.email       = ['luke_imhoff@rapid7.com']
+  s.authors     = ['Metasploit Hackers']
+  s.email       = ['msfdev@metasploit.com']
   s.homepage    = 'https://github.com/rapid7/metasploit-concern'
   s.license     = 'BSD-3-clause'
   s.summary     = 'Automatically include Modules from app/concerns'
