@@ -6,10 +6,10 @@ require 'simplecov'
 #   # don't generate local report as it is inaccessible on travis-ci, which is why coveralls is being used.
 #   SimpleCov.formatter = Coveralls::SimpleCov::Formatter
 # else
-  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
       # either generate the local report
       SimpleCov::Formatter::HTMLFormatter
-  ]
+  ])
 # end
 
 require 'aruba/cucumber'
