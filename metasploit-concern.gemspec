@@ -7,8 +7,8 @@ require 'metasploit/concern/version'
 Gem::Specification.new do |s|
   s.name        = 'metasploit-concern'
   s.version     = Metasploit::Concern::VERSION
-  s.authors     = ['Luke Imhoff']
-  s.email       = ['luke_imhoff@rapid7.com']
+  s.authors     = ['Metasploit Hackers']
+  s.email       = ['msfdev@metasploit.com']
   s.homepage    = 'https://github.com/rapid7/metasploit-concern'
   s.license     = 'BSD-3-clause'
   s.summary     = 'Automatically include Modules from app/concerns'
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,lib}/**/*'] + ['CONTRIBUTING.md', 'LICENSE', 'Rakefile', 'README.md'] + Dir['spec/support/**/*.rb']
 
 
-  s.required_ruby_version = '>= 2.2.0'
+  s.required_ruby_version = '>= 2.4.0'
 
   s.add_development_dependency 'metasploit-yard'
   s.add_development_dependency 'metasploit-erd'
