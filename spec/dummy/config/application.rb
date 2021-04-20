@@ -42,10 +42,9 @@ module Dummy
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
 
-    # Rails 5 requires this be set
-    config.active_record.sqlite3.represent_boolean_as_integer = true
-
     config.paths.add 'app/concerns', autoload: true
+
+    config.autolaoder = :zeitwerk
   end
 end
 

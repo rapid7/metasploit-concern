@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe Metasploit::Concern::Loader do
+  include Shoulda::Matchers::ActiveModel
+  include Shoulda::Matchers::ActiveRecord
+
   shared_context 'Metasploit::Concern::ModuleWithConcerns' do
     #
     # Methods
