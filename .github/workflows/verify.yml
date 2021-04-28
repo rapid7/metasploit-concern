@@ -64,3 +64,11 @@ jobs:
           bash -c "${CMD}"
         env:
           CMD: ${{ matrix.test_cmd }}
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage-${{ matrix.ruby }}
+          path: |
+            coverage/
+          retention-days: 1
