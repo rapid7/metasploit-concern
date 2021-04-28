@@ -20,15 +20,11 @@ jobs:
           - 2.5
           - 2.6
           - 2.7
-        test_cmd:
-          - bundle exec rake spec
-          - bundle exec rake cucumber
-          - bundle exec rake yard
 
     env:
       RAILS_ENV: test
 
-    name: Ruby ${{ matrix.ruby }} - ${{ matrix.test_cmd }}
+    name: Ruby ${{ matrix.ruby }}
     steps:
       - name: Install system dependencies
         run: sudo apt-get install graphviz
@@ -58,12 +54,11 @@ jobs:
         env:
           BUNDLER_WITHOUT: coverage development pcap
 
-      - name: ${{ matrix.test_cmd }}
+      - name: Test
         run: |
-          echo "${CMD}"
-          bash -c "${CMD}"
-        env:
-          CMD: ${{ matrix.test_cmd }}
+          bundle exec rake spec
+          bundle exec rake cucumber
+          bundle exec rake yard
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v2
