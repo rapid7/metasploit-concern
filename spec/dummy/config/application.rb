@@ -57,6 +57,8 @@ module Dummy
         loader.enable_reloading
       end
     end
+    
+    ActiveRecord.legacy_connection_handling = false
   end
 end
 
