@@ -104,15 +104,8 @@ RSpec.describe Metasploit::Concern::Engine do
                 }.not_to raise_error
               end
 
-              it "creates Metasploit::Concern::Loader for engine's app/concerns" do
-                expect(Metasploit::Concern::Loader).to receive(:new).with(
-                                                           hash_including(
-                                                               root: root.join('app', 'concerns')
-                                                           )
-                                                       ).and_return(
-                                                           double(register: nil)
-                                                       )
-
+              it "registers concern load via ActiveSupport::Reloader.to_prepare for for engine's app/concerns" do
+                expect(ActiveSupport::Reloader).to receive(:to_prepare)
                 load_concerns.run
               end
             end

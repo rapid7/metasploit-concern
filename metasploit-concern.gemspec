@@ -30,4 +30,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'activesupport', '~> 6.0'
   # for engine
   s.add_runtime_dependency 'railties', '~> 6.0'
+  s.add_runtime_dependency 'zeitwerk'
 end

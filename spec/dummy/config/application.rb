@@ -44,7 +44,19 @@ module Dummy
 
     config.paths.add 'app/concerns', autoload: true
 
-    config.autolaoder = :zeitwerk
+    config.autoloader = :zeitwerk
+
+    initializer :metaspliot_concern_test_reloading, before: :setup_main_autoloader do
+      Rails.autoloaders.each do |loader|
+        loader.enable_reloading
+      end
+    end
+
+    initializer :metaspliot_concern_test_reloading, before: :setup_once_autoloader do
+      Rails.autoloaders.each do |loader|
+        loader.enable_reloading
+      end
+    end
   end
 end
 

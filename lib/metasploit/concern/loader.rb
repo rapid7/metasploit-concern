@@ -32,10 +32,9 @@ class Metasploit::Concern::Loader
   # @yieldparam constant [Module] constant declared under `parent_pathname`.
   # @yieldreturn [void]
   # @return [void]
-  def each_pathname_constant(mechanism:, parent_pathname:)
+  def each_pathname_constant(parent_pathname:)
     parent_pathname.each_child do |child_pathname|
       constant = constantize_pathname(
-          mechanism: mechanism,
           pathname: child_pathname
       )
 
@@ -87,13 +86,7 @@ class Metasploit::Concern::Loader
       loader = self
 
       ActiveSupport.on_load(on_load_name) do
-        if ActiveSupport::Dependencies.autoloaded? self
-          mechanism = :constantize
-        else
-          mechanism = :require
-        end
-
-        loader.each_pathname_constant(mechanism: mechanism, parent_pathname: module_pathname) do |concern|
+        loader.each_pathname_constant(parent_pathname: module_pathname) do |concern|
           include concern
         end
       end
@@ -109,19 +102,25 @@ class Metasploit::Concern::Loader
   # @param pathname [Pathname] a Pathname under {#root}.
   # @return [Object] if {#pathname_to_constant_name} returns a constant name
   # @return [nil] otherwise
-  def constantize_pathname(mechanism:, pathname:)
+  def constantize_pathname(pathname:)
     constant_name = pathname_to_constant_name(pathname)
 
     constant = nil
 
     if constant_name
-      # require before calling constantize so that the constant isn't recorded as unloadable.
-      if mechanism == :require
-        require pathname
+      begin
+        # constantize either way as the the constant_name still needs to be converted to Module
+        constant = constant_name.constantize
+      rescue => e # rescue any here should probably be more specific
+        if e.kind_of?(NameError)
+          begin
+            require pathname
+            constant = constant_name.constantize
+          rescue NameError => _e
+            _e # left for debugging breakpoint
+          end
+        end
       end
-
-      # constantize either way as the the constant_name still needs to be converted to Module
-      constant = constant_name.constantize
     end
 
     constant
