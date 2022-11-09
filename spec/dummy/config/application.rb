@@ -46,13 +46,13 @@ module Dummy
 
     config.autoloader = :zeitwerk
 
-    initializer :metaspliot_concern_test_reloading, before: :setup_main_autoloader do
+    initializer :metasploit_concern_test_reloading, before: :setup_main_autoloader do
       Rails.autoloaders.each do |loader|
         loader.enable_reloading
       end
     end
 
-    initializer :metaspliot_concern_test_reloading, before: :setup_once_autoloader do
+    initializer :metasploit_concern_test_reloading, before: :setup_once_autoloader do
       Rails.autoloaders.each do |loader|
         loader.enable_reloading
       end
