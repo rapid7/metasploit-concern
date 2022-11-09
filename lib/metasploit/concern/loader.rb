@@ -87,7 +87,7 @@ class Metasploit::Concern::Loader
 
       ActiveSupport.on_load(on_load_name) do
         loader.each_pathname_constant(parent_pathname: module_pathname) do |concern|
-          include concern
+          include concern unless self.ancestors.map(&:name).include?(concern.to_s)
         end
       end
     end
