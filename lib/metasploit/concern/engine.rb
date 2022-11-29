@@ -41,12 +41,16 @@ module Metasploit
               raise Metasploit::Concern::Error::SkipAutoload, engine
             end
 
-            concerns_directories = concerns_path.existent_directories
+            ActiveSupport::Reloader.to_prepare do
+              # wrap engine configs changes in to_prepare to ensure they get recreated if classes are reloaded by zeitwerk
+              concerns_directories = concerns_path.existent_directories
 
-            concerns_directories.each do |concerns_directory|
-              concerns_pathname = Pathname.new(concerns_directory)
-              loader = Metasploit::Concern::Loader.new(root: concerns_pathname)
-              loader.register
+              concerns_directories.each do |concerns_directory|
+                concerns_pathname = Pathname.new(concerns_directory)
+
+                loader = Metasploit::Concern::Loader.new(root: concerns_pathname)
+                loader.register
+              end
             end
           end
         end

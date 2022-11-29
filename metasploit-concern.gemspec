@@ -19,15 +19,16 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,lib}/**/*'] + ['CONTRIBUTING.md', 'LICENSE', 'Rakefile', 'README.md'] + Dir['spec/support/**/*.rb']
 
 
-  s.required_ruby_version = '>= 2.4.0'
+  s.required_ruby_version = '>= 2.7.0'
 
   s.add_development_dependency 'metasploit-yard'
   s.add_development_dependency 'metasploit-erd'
 
   # uses ActiveSupport.on_load to include concerns
   # it is only defined in version 3.0.0 and newer
-  s.add_runtime_dependency 'activemodel', '~> 6.0'
-  s.add_runtime_dependency 'activesupport', '~> 6.0'
+  s.add_runtime_dependency 'activemodel', '~> 7.0'
+  s.add_runtime_dependency 'activesupport', '~> 7.0'
   # for engine
-  s.add_runtime_dependency 'railties', '~> 6.0'
+  s.add_runtime_dependency 'railties', '~> 7.0'
+  s.add_runtime_dependency 'zeitwerk'
 end
