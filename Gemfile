@@ -16,7 +16,7 @@ group :development, :test do
   # rails is not used because activerecord should not be included, but rails would normally coordinate the versions
   # between its dependencies, which is now handled by this constraint.
   # @todo MSP-9654
-  
+
   # Dummy app uses actionpack for ActionController, but not rails since it doesn't use activerecord.
   gem 'actionpack'
   # Engine tasks are loaded using railtie
@@ -24,7 +24,7 @@ group :development, :test do
   # running documentation generation tasks and rspec tasks
   gem 'rake'
   # Used for Sql Lite Db
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.7'
   # provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking.
   gem "minitest"
   gem 'rspec-rails'
