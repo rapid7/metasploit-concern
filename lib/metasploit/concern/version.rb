@@ -1,7 +1,7 @@
 module Metasploit
   module Concern
     # VERSION is managed by GemRelease
-    VERSION = '5.0.4'
+    VERSION = '5.0.5'
   
     # @return [String]
     #
