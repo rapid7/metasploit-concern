@@ -5,6 +5,10 @@ source 'https://rubygems.org'
 # development dependencies will be added by default to the :development group.
 gemspec
 
+# Temporary, remove once the Rails 7.1 update is complete
+# see: https://stackoverflow.com/questions/79360526/uninitialized-constant-activesupportloggerthreadsafelevellogger-nameerror
+gem 'concurrent-ruby', '1.3.4'
+
 group :development do
   # documentation
   gem 'yard'

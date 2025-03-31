@@ -31,4 +31,12 @@ Gem::Specification.new do |s|
   # for engine
   s.add_runtime_dependency 'railties', '~> 7.0'
   s.add_runtime_dependency 'zeitwerk'
+
+  # Standard libraries: https://www.ruby-lang.org/en/news/2023/12/25/ruby-3-3-0-released/
+  %w[
+    drb
+    mutex_m
+  ].each do |library|
+    s.add_runtime_dependency library
+  end
 end
