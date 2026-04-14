@@ -44,8 +44,6 @@ module Dummy
 
     config.paths.add 'app/concerns', autoload: true
 
-    config.autoloader = :zeitwerk
-
     initializer :metasploit_concern_test_reloading, before: :setup_main_autoloader do
       Rails.autoloaders.each do |loader|
         loader.enable_reloading

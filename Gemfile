@@ -27,18 +27,24 @@ group :development, :test do
   gem 'railties'
   # running documentation generation tasks and rspec tasks
   gem 'rake'
-  # Used for Sql Lite Db
-  gem 'sqlite3', '~> 1.7'
   # provides a complete suite of testing facilities supporting TDD, BDD, mocking, and benchmarking.
   gem "minitest"
   gem 'rspec-rails'
   # defines time zones for activesupport.  Must be explicit since it is normally implicit with activerecord
   gem 'tzinfo'
+
+  rails_version = ENV['RAILS_VERSION'].to_s[/\d+(?:\.\d+){0,2}/]
+  sqlite3_requirements = if rails_version && rails_version.split('.').first.to_i < 8
+                           ['~> 1.4']
+                         else
+                           ['>= 2.1', '< 3.0']
+                         end
+  gem 'sqlite3', *sqlite3_requirements
 end
 
 group :test do
   # Test the 'Metasploit::Concern.run' shared example
-  gem 'aruba'
+  gem 'aruba', '~> 2.3'
   # Test the 'Metasploit::Concern.run' shared example
   gem 'cucumber'
   # add matchers from shoulda, such as validates_presence_of, which are useful for testing validations
