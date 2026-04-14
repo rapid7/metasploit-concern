@@ -26,10 +26,13 @@ Gem::Specification.new do |s|
 
   # uses ActiveSupport.on_load to include concerns
   # it is only defined in version 3.0.0 and newer
-  s.add_runtime_dependency 'activemodel', '~> 7.0'
-  s.add_runtime_dependency 'activesupport', '~> 7.0'
+  # Rails 8.0 upgrade: widened from '~> 7.0' (which means >= 7.0, < 8.0) to
+  # '>= 7.0', '< 8.1' so this gem resolves with both Rails 7.x and 8.0.
+  # The old pessimistic constraint hard-blocked Bundler from pulling Rails 8.
+  s.add_runtime_dependency 'activemodel', '>= 7.0', '< 8.1'
+  s.add_runtime_dependency 'activesupport', '>= 7.0', '< 8.1'
   # for engine
-  s.add_runtime_dependency 'railties', '~> 7.0'
+  s.add_runtime_dependency 'railties', '>= 7.0', '< 8.1'
   s.add_runtime_dependency 'zeitwerk'
 
   # Standard libraries: https://www.ruby-lang.org/en/news/2023/12/25/ruby-3-3-0-released/
