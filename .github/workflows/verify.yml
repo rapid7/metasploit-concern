@@ -12,7 +12,6 @@ jobs:
   build:
     uses: rapid7/metasploit-framework/.github/workflows/shared_gem_verify_rails.yml@master
     with:
-      dependencies: '["graphviz"]'
       test_commands: |
         bundle exec rake spec
         bundle exec rake cucumber

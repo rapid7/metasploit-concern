@@ -17,12 +17,9 @@ group :development do
 end
 
 group :development, :test do
-  # rails is not used because activerecord should not be included, but rails would normally coordinate the versions
-  # between its dependencies, which is now handled by this constraint.
-  # @todo MSP-9654
-
-  # Dummy app uses actionpack for ActionController, but not rails since it doesn't use activerecord.
   gem 'actionpack'
+  # The dummy application requires active_record/railtie.
+  gem 'activerecord'
   # Engine tasks are loaded using railtie
   gem 'railties'
   # running documentation generation tasks and rspec tasks
