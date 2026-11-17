@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.7.0'
 
   s.add_development_dependency 'metasploit-yard'
-  s.add_development_dependency 'metasploit-erd'
 
   # uses ActiveSupport.on_load to include concerns
   # it is only defined in version 3.0.0 and newer
